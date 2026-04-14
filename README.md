@@ -15,18 +15,13 @@ See the [Hermes plugin guide](https://hermes-agent.nousresearch.com/docs/guides/
 
 ## Install
 
-### From a local checkout
-
 ```bash
-cd todo4-hermes-plugin
-pip install .
+hermes plugins install https://github.com/panitw/todo4-hermes-plugin
 ```
 
-The `hermes_agent.plugins` entry point in `pyproject.toml` is auto-discovered on Hermes startup.
+When prompted for environment variables, **skip them** — the onboarding flow will populate `TODO4_AGENT_TOKEN` in `~/.hermes/.env` automatically, and `TODO4_API_URL` defaults to `https://todo4.io/api/v1`.
 
-### Alternative: drop-in plugin directory
-
-Copy the `todo4_hermes/` package under `~/.hermes/plugins/todo4/`. Hermes will load it on next start.
+Restart Hermes (or run `/reload-mcp` after onboarding) for the new tools and skills to activate.
 
 ## Usage
 
