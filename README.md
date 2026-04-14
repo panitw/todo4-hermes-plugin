@@ -27,13 +27,21 @@ hermes gateway restart
 
 ## Usage
 
-In chat, say any of:
+### Onboarding
 
-- "Set me up with Todo4"
-- "Connect Todo4"
-- "I want to use Todo4"
+Hermes doesn't auto-match fuzzy phrases to skills reliably. Use one of these explicit prompts in chat:
 
-The `onboard` skill walks you through one question at a time and finishes by writing the MCP config. Run `/reload-mcp` (or restart Hermes) to activate the Todo4 MCP tools.
+1. **Run the skill by name** (recommended):
+
+   > Run the todo4-onboard skill
+
+2. **Call the tool directly** (fallback if the skill doesn't trigger):
+
+   > Use `todo4_register` to sign me up — my email is you@example.com
+
+Either way, the flow asks for your email, sends a one-time code, verifies it, and connects this Hermes instance as your Todo4 agent. After the flow completes, run `hermes gateway restart` (or `/reload-mcp`) to activate the Todo4 MCP tools.
+
+### Diagnostics
 
 From the terminal:
 
