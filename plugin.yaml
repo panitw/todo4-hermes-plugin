@@ -1,0 +1,17 @@
+name: todo4
+version: 0.1.0
+description: Onboard Todo4 from chat — create an account, connect this agent via MCP, and work with your task list.
+author: Panit Wechasil
+provides_tools:
+  - todo4_register
+  - todo4_verify_otp
+  - todo4_connect
+  - todo4_status
+requires_env:
+  - name: TODO4_API_URL
+    description: "Todo4 API base URL. Defaults to https://todo4.io/api/v1 when unset."
+    url: "https://todo4.io"
+    secret: false
+  - name: TODO4_AGENT_TOKEN
+    description: "Agent bearer token. Populated into ~/.hermes/.env by the onboarding flow and referenced from the MCP server config."
+    secret: true
