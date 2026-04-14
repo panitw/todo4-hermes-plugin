@@ -16,13 +16,11 @@ See the [Hermes plugin guide](https://hermes-agent.nousresearch.com/docs/guides/
 
 ```bash
 hermes plugins install https://github.com/panitw/todo4-hermes-plugin
+hermes plugins list     # triggers plugin load, installs bundled skills
+hermes gateway restart  # so the gateway picks up the new toolset
 ```
 
-Then restart Hermes so the plugin is loaded:
-
-```bash
-hermes gateway restart
-```
+> Note: `hermes gateway restart` alone does **not** re-run a plugin's `register()` — skills won't install until something like `hermes plugins list` triggers plugin discovery.
 
 ## Usage
 
