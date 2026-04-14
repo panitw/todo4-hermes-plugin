@@ -6,10 +6,9 @@ Hermes Agent plugin that onboards [Todo4](https://todo4.io) from chat and ships 
 
 - **Onboards Todo4 from chat** — email → OTP → agent connection, no browser or password required.
 - **Configures the Todo4 MCP server** — writes the server entry into your Hermes YAML config and stores the agent token in `~/.hermes/.env`.
-- **Ships two bundled skills**:
-  - `onboard.md` — the interview flow the agent follows when you say "set me up with Todo4".
-  - `work-with-todo4.md` — an agent playbook for effective day-to-day task management.
-- **`hermes todo4 doctor` CLI** — diagnose the Todo4 connection from the terminal.
+- **Ships two bundled skills** (installed to `~/.hermes/skills/`):
+  - `todo4-onboard` — the interview flow the agent follows to create an account and connect.
+  - `todo4-work` — an agent playbook for effective day-to-day task management.
 
 See the [Hermes plugin guide](https://hermes-agent.nousresearch.com/docs/guides/build-a-hermes-plugin) for context on how plugins plug in.
 
@@ -43,11 +42,11 @@ Either way, the flow asks for your email, sends a one-time code, verifies it, an
 
 ### Diagnostics
 
-From the terminal:
+Ask the agent:
 
-```bash
-hermes todo4 doctor
-```
+> Call `todo4_status`
+
+…which reports whether the agent token is present, the MCP entry is in `config.yaml`, and the Todo4 API is reachable.
 
 ## Requirements
 

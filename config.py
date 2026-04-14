@@ -31,7 +31,3 @@ def get_config_path() -> Path:
 
 def get_env_file() -> Path:
     return get_hermes_home() / ".env"
-
-
-def get_skills_dir() -> Path:
-    return get_hermes_home() / "skills" / "todo4"
