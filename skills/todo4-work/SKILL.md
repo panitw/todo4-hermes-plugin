@@ -18,19 +18,19 @@ If the Todo4 MCP tools don't seem available to you, call the `todo4_status` plug
 
 ## The MCP tools you have
 
-The Todo4 MCP server registers as `todo4`. In Hermes the tools are named `todo4:<tool>`. Always call them by that exact name:
+The Todo4 MCP server is connected as `todo4`. The tools exposed to you have **no prefix** — call them by their bare name (e.g. `list_tasks`, not `todo4:list_tasks` or `todo4.list_tasks`). The `todo4:` notation only appears in `hermes tools enable/disable` CLI syntax, not in tool-call invocations.
 
 | Tool | Purpose |
 |---|---|
-| `todo4:get_platform_info` | Discover capabilities, connected agents, and available features. Call this first if you're unsure what's possible. |
-| `todo4:list_tasks` | List tasks with filters (status, tag, due date range, priority, assignee). |
-| `todo4:get_task` | Fetch a single task by ID — includes subtasks, comments, history. |
-| `todo4:create_task` | Create a task with title, description, due date, tags, priority, subtasks. |
-| `todo4:update_task` | Change status, due date, priority, tags, description on an existing task. |
-| `todo4:notify_human` | Send a message to the user's Todo4 inbox. Use for blockers, ambiguous input, or things the user explicitly asked you to flag. |
-| `todo4:open_website` | Generate a one-time login URL so the user can open Todo4 in the browser already signed in. |
+| `get_platform_info` | Discover capabilities, connected agents, and available features. Call this first if you're unsure what's possible. |
+| `list_tasks` | List tasks with filters (status, tag, due date range, priority, assignee). |
+| `get_task` | Fetch a single task by ID — includes subtasks, comments, history. |
+| `create_task` | Create a task with title, description, due date, tags, priority, subtasks. |
+| `update_task` | Change status, due date, priority, tags, description on an existing task. |
+| `notify_human` | Send a message to the user's Todo4 inbox. Use for blockers, ambiguous input, or things the user explicitly asked you to flag. |
+| `open_website` | Generate a one-time login URL so the user can open Todo4 in the browser already signed in. |
 
-If you see 11+ MCP tools under `todo4` but the table above only lists 7, the extra tools handle subtasks, comments, and notifications — use them when the user's request needs them (e.g. `todo4:add_comment`, `todo4:add_subtask` — call `todo4:get_platform_info` or just try the tool to see its schema).
+If you see 11+ MCP tools under `todo4` but the table above only lists 7, the extra tools handle subtasks, comments, and notifications — use them when the user's request needs them (e.g. `add_comment`, `add_subtask` — call `get_platform_info` or just try the tool to see its schema).
 
 ## Principles
 
@@ -38,7 +38,7 @@ If you see 11+ MCP tools under `todo4` but the table above only lists 7, the ext
 
 **Due dates are commitments, not wishes.** Only set a due date if missing it has a consequence.
 
-**Notify sparingly.** `todo4:notify_human` is for things the user needs to see now. Routine progress belongs in task comments (or no update at all).
+**Notify sparingly.** `notify_human` is for things the user needs to see now. Routine progress belongs in task comments (or no update at all).
 
 **Confirm before destructive changes.** Never close, delete, or reassign a task without explicit user approval.
 
@@ -56,23 +56,23 @@ If you see 11+ MCP tools under `todo4` but the table above only lists 7, the ext
 ## Common workflows
 
 **"Show me my tasks" / "Get task list"**
-→ Call `todo4:list_tasks` (no filters for a full list, or `status: open` for active only). Present a short summary, not a dump.
+→ Call `list_tasks` (no filters for a full list, or `status: open` for active only). Present a short summary, not a dump.
 
 **"Plan my week"**
-1. `todo4:list_tasks` with `dueBefore: <next Sunday>` and `status: open`.
+1. `list_tasks` with `dueBefore: <next Sunday>` and `status: open`.
 2. Group by priority and due date. Surface overdue first, then due this week.
 3. Ask the user which to reschedule, delegate, or drop — one decision at a time.
-4. Apply changes with `todo4:update_task`.
+4. Apply changes with `update_task`.
 
 **"Triage my inbox"**
-1. `todo4:list_tasks` with `status: needs_attention`.
-2. For each, propose: close, snooze, break into subtasks, or hand back via `todo4:notify_human`.
+1. `list_tasks` with `status: needs_attention`.
+2. For each, propose: close, snooze, break into subtasks, or hand back via `notify_human`.
 3. Never auto-close. Confirm with the user first.
 
 **"Break this down"**
 1. Restate the goal as a single outcome.
 2. Propose 3–6 subtasks ordered by dependency.
-3. Confirm, then create with `todo4:create_task` (subtasks inline if supported, else parent + follow-ups).
+3. Confirm, then create with `create_task` (subtasks inline if supported, else parent + follow-ups).
 
 **"Follow up on X"**
 1. Create a task with a due date tied to the reason you're following up.
@@ -83,7 +83,7 @@ If you see 11+ MCP tools under `todo4` but the table above only lists 7, the ext
 
 - Task titled "Ask John about Y" with no due date — it will rot. Set a date.
 - Dumping a long meeting transcript into a description — summarize decisions, link the transcript.
-- Using `todo4:notify_human` as a progress log — users will mute you.
+- Using `notify_human` as a progress log — users will mute you.
 - Closing tasks without explicit user approval.
 
 ## If something goes wrong

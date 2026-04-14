@@ -89,7 +89,7 @@ Read the result:
   3. SAY (verbatim):
      > After `/reload-mcp`, try: "Create a task to review the Q2 report by Friday."
 
-  Then WAIT. When the user requests anything task-related, use the Todo4 **MCP tools**, named `todo4:list_tasks`, `todo4:create_task`, `todo4:get_task`, `todo4:update_task`, `todo4:notify_human`, `todo4:get_platform_info`, `todo4:open_website`, etc. Do NOT re-run `todo4_register`/`verify_otp`/`connect` (those are onboarding-only). Do NOT fall back to `curl`, `execute_code`, `browser_navigate`, or `terminal` — the MCP tools are the canonical and only path. If you're unsure what's available, call `todo4:get_platform_info` first, or load the `todo4-work` skill for full guidance.
+  Then WAIT. When the user requests anything task-related, use the Todo4 **MCP tools** by their bare names: `list_tasks`, `create_task`, `get_task`, `update_task`, `notify_human`, `get_platform_info`, `open_website`. Do NOT prefix them with `todo4:` or `todo4.` — that prefix is only for `hermes tools` CLI syntax, never for tool-call invocations. Do NOT re-run `todo4_register`/`verify_otp`/`connect` (those are onboarding-only). Do NOT fall back to `curl`, `execute_code`, `browser_navigate`, or `terminal` — the MCP tools are the canonical and only path. If unsure what's available, call `get_platform_info` first or load the `todo4-work` skill.
 - `"ok": false` and `"error": "unauthorized"` → SAY: "The verification session expired. Let me start over." Go back to STEP 1.
 - `"ok": false` and `"error": "quota_exceeded"` → SAY: "Your account has reached the maximum number of connected agents. Manage them at todo4.io." STOP.
 - `"ok": false` and `"error": "network"` → SAY: "I couldn't reach the Todo4 server. Please check your connection." STOP.
