@@ -14,13 +14,40 @@ See the [Hermes plugin guide](https://hermes-agent.nousresearch.com/docs/guides/
 
 ## Install
 
+Run these commands in order:
+
 ```bash
+# 1. Clone the plugin into ~/.hermes/plugins/todo4/
 hermes plugins install https://github.com/panitw/todo4-hermes-plugin
-hermes plugins list     # triggers plugin load, installs bundled skills
-hermes gateway restart  # so the gateway picks up the new toolset
+
+# 2. Trigger plugin discovery so register() runs and bundled skills land in
+#    ~/.hermes/skills/todo4-onboard/ and ~/.hermes/skills/todo4-work/
+hermes plugins list
+
+# 3. Restart the gateway so it picks up the new toolset
+hermes gateway restart
 ```
 
-> Note: `hermes gateway restart` alone does **not** re-run a plugin's `register()` — skills won't install until something like `hermes plugins list` triggers plugin discovery.
+> **Why step 2 matters:** `hermes gateway restart` alone does **not** invoke a plugin's `register()` function. Plugin load happens during CLI commands that go through plugin discovery (like `hermes plugins list`). Without step 2, the bundled `todo4-onboard` and `todo4-work` skills won't appear in `~/.hermes/skills/`.
+
+### Verify
+
+```bash
+hermes plugins list | grep todo4     # enabled, v0.1.0, source=git
+hermes skills list  | grep todo4     # todo4-onboard + todo4-work, source=local
+hermes tools list   | grep todo4     # ✓ enabled  todo4  🔌 Todo4
+```
+
+### Updating
+
+```bash
+hermes plugins uninstall todo4
+hermes plugins install https://github.com/panitw/todo4-hermes-plugin
+hermes plugins list
+hermes gateway restart
+```
+
+(Hermes does not currently pull plugin updates in place when the version in `plugin.yaml` hasn't bumped, so uninstall + reinstall is the reliable path.)
 
 ## Usage
 
@@ -77,9 +104,12 @@ Tool handlers never raise, never log secrets, and never return tokens inside the
 ## Development
 
 ```bash
-pip install -e ".[dev]"
-pytest
+python3 -m venv .venv
+.venv/bin/pip install pytest responses requests PyYAML
+cd /tmp && /path/to/hermes-plugin/.venv/bin/pytest /path/to/hermes-plugin/tests/
 ```
+
+> Tests need to run from a cwd **outside** the plugin root. The plugin's `__init__.py` uses package-relative imports (`from . import config, tools`), which match how Hermes loads it at runtime but confuse pytest's test-collection walker when invoked from inside the plugin directory.
 
 ## License
 
