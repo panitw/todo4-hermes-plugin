@@ -1,6 +1,6 @@
 ---
 name: todo4-onboard
-description: "Sign up for Todo4 and connect this agent via MCP. Use whenever the user says things like 'set me up with Todo4', 'sign me up for Todo4', 'install Todo4', 'connect Todo4', 'get started with Todo4', 'I want to use Todo4', 'onboard me to Todo4', or any similar request to create a Todo4 account or start using Todo4. Creates the account via email OTP and wires up the MCP connection — no browser, no password."
+description: "The todo4-onboard skill. Run this whenever the user asks to run todo4-onboard, to be onboarded to Todo4, to sign up for Todo4, to connect Todo4, to install Todo4, or to start/get going with Todo4. Creates the account via email OTP and wires up the Todo4 MCP connection — no browser, no password."
 ---
 
 # Todo4 Onboarding Skill (Hermes)
