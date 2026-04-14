@@ -6,11 +6,13 @@ import logging
 import shutil
 from pathlib import Path
 
-from . import config, schemas, tools
+import config
+import schemas
+import tools
 
 logger = logging.getLogger(__name__)
 
-_PLUGIN_DIR = Path(__file__).parent
+_PLUGIN_DIR = Path(__file__).resolve().parent
 _BUNDLED_SKILLS = _PLUGIN_DIR / "skills"
 
 
@@ -63,10 +65,8 @@ def _install_skills() -> None:
         return
     for src in _BUNDLED_SKILLS.glob("*.md"):
         dest = dest_dir / src.name
-        if dest.exists():
-            continue
         try:
-            shutil.copy2(src, dest)
+            shutil.copy2(src, dest)  # always overwrite so plugin updates propagate
         except OSError as exc:
             logger.warning("todo4: could not install skill %s: %s", src.name, exc)
 
@@ -98,4 +98,4 @@ def _print_doctor(report: dict) -> None:
     if report.get("apiError"):
         print(f"     API error:           {report['apiError']}")
     if not configured:
-        print("\nRun the onboarding skill in chat: 'set me up with Todo4'.")
+        print("\nRun the onboarding skill in chat: 'Run the todo4-onboard skill'.")

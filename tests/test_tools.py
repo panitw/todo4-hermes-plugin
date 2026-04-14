@@ -10,7 +10,8 @@ import pytest
 import responses
 import yaml
 
-from todo4_hermes import config, tools
+import config
+import tools
 
 
 API = config.DEFAULT_API_URL
