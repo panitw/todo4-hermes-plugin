@@ -89,5 +89,5 @@ If you see 11+ MCP tools under `todo4` but the table above only lists 7, the ext
 ## If something goes wrong
 
 1. MCP tool returns an auth error → the agent token expired or the MCP config is stale. Ask the user to run `hermes gateway restart`, then try again. If still failing, call `todo4_status` (plugin tool) to diagnose.
-2. You can't find any `todo4:*` tool in your toolset → the Todo4 MCP server isn't connected. Call `todo4_status`; if `configured: false`, trigger the `todo4-onboard` skill.
+2. You can't find `list_tasks` / `create_task` in your toolset → the Todo4 MCP server isn't connected. Call `todo4_status` (the plugin tool, with prefix); if `configured: false`, trigger the `todo4-onboard` skill.
 3. You're tempted to reach for `curl`, `execute_code`, `browser_navigate`, or `terminal` → go back to the table above. Every Todo4 operation has a dedicated MCP tool.
