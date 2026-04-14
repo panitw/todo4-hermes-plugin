@@ -6,9 +6,7 @@ import logging
 import shutil
 from pathlib import Path
 
-import config
-import schemas
-import tools
+from . import config, schemas, tools
 
 logger = logging.getLogger(__name__)
 

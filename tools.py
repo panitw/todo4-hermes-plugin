@@ -20,7 +20,7 @@ from typing import Any, Dict, Optional
 import requests
 import yaml
 
-import config
+from . import config
 
 logger = logging.getLogger(__name__)
 

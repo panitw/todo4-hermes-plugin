@@ -10,8 +10,7 @@ import pytest
 import responses
 import yaml
 
-import config
-import tools
+from todo4_plugin import config, tools
 
 
 API = config.DEFAULT_API_URL
