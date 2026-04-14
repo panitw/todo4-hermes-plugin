@@ -14,21 +14,23 @@ See the [Hermes plugin guide](https://hermes-agent.nousresearch.com/docs/guides/
 
 ## Install
 
-Run these commands in order:
+Run these three commands in order:
 
 ```bash
 # 1. Clone the plugin into ~/.hermes/plugins/todo4/
 hermes plugins install https://github.com/panitw/todo4-hermes-plugin
 
-# 2. Trigger plugin discovery so register() runs and bundled skills land in
-#    ~/.hermes/skills/todo4-onboard/ and ~/.hermes/skills/todo4-work/
-hermes plugins list
+# 2. Start a chat session so Hermes runs the plugin's register() function —
+#    this is what installs the bundled skills into ~/.hermes/skills/.
+#    You can exit immediately; just typing /exit is enough.
+hermes chat          # then type /exit
 
-# 3. Restart the gateway so it picks up the new toolset
+# 3. Restart the gateway so Telegram/WhatsApp sessions pick up the new
+#    toolset. (Skip if you only use `hermes chat` locally.)
 hermes gateway restart
 ```
 
-> **Why step 2 matters:** `hermes gateway restart` alone does **not** invoke a plugin's `register()` function. Plugin load happens during CLI commands that go through plugin discovery (like `hermes plugins list`). Without step 2, the bundled `todo4-onboard` and `todo4-work` skills won't appear in `~/.hermes/skills/`.
+> **Why step 2 matters:** `hermes plugins install`, `hermes plugins list`, and `hermes gateway restart` do **not** invoke a plugin's `register()` function. The register hook only fires when a chat session starts — at which point bundled skills get copied into `~/.hermes/skills/`. Without step 2, the `todo4-onboard` and `todo4-work` skills will be missing.
 
 ### Verify
 
@@ -43,7 +45,7 @@ hermes tools list   | grep todo4     # ✓ enabled  todo4  🔌 Todo4
 ```bash
 hermes plugins uninstall todo4
 hermes plugins install https://github.com/panitw/todo4-hermes-plugin
-hermes plugins list
+hermes chat          # then type /exit — triggers register()
 hermes gateway restart
 ```
 
